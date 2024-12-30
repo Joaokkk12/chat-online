@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat em Tempo Real</title>
+  <style>
+@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&family=Rubik+Vinyl&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Pixelify+Sans:wght@400..700&family=Rubik+Vinyl&display=swap');
+    body {
+      transition: 1s;
+      background-color: rgba(0,0,50,1);
+     
+      
+      
+      text-align: center;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color:white;
+    }
+    #chat-container {
+      display:block;
+      transition:1s;
+      color: yellow;
+     width:0px;
+      height:130%;
+      max-height: 1000px;
+      background: rgba(0, 0, 30, 0.5);
+      box-shadow: 0 2px 10px darkblue;
+      border-radius: 15px;
+      overflow: hidden;
+      border: 5px solid darkblue;
+      justify-content: center;
+      align-items: center;
+      z-index:3;
+      overflow: hidden;
+    }
+    #messages {
+      transition:1s;
+      color:yellow;
+      height: 570px;
+      overflow-y: auto;
+      padding: 10px;
+      border-bottom: 1px solid skyblue;
+      background-color: rgba(0, 0, 30, 1);
+    } 
+    .message {
+      color:white;
+      margin: 10px 0;
+  font-family: "Oswald", serif;
+  font-optical-sizing: auto;
+  font-weight: bold;
+  font-style: normal;
+
+    }
+    .message span {
+      font-weight: bold;
+    }
+    #form {
+      display: flex;
+      padding: 10px;
+    }
+    #form input {
+      
+      display:flex;
+      color:white;
+      flex: 1;
+      padding: 8px;
+      border: 1px solid darkblue;
+      border-radius: 15px;
+      border: none;
+      background-color: rgba(0, 0, 100, 1);
+    }
+    #form input::placeholder {
+      color: rgba(0,0,40,1);
+    }
+    #form #name {
+      display:grid;
+      color:yellow;
+      flex: 1;
+      padding: 8px;
+      border: 1px solid darkblue;
+      border-radius: 15px;
+      border: none;
+      background-color: rgba(0, 0, 100, 1);
+    }
+    #form input:focus {
+      
+      outline: none;
+      border: 2px solid blue;
+    }
+    #form input:focus::placeholder {
+      color: rgba(0,0,200,1);
+    }
+    #form button {
+      padding: 8px 12px;
+      border: none;
+      background: blue;
+      color: white;
+      border-radius: 15px;
+      margin-left: 5px;
+      cursor: pointer;
+    }
+    
+    #form button:hover {
+      background: #0056b3;
+      
+    }
+    #launche {
+  filter: invert(1) brightness(2); 
+    }
+    
+    #config {
+    margin: auto;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+      transition: 0.5s;
+      opacity: 0;
+      background-color: rgba(0,0,0,0.3);
+      color: white;
+      border-radius: 25px;
+      z-index: 4;
+      display:none;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 50px;
+      width: 300px;
+      height:570px;
+      font-weight: bold;
+      border:none;
+      outline: none;
+    }
+    
+    
+    #config  #X {
+      
+      margin:auto;
+      position: relative;
+      transition:1s;
+      left: 59%;
+      top:-90px;
+      border-radius: 40px;
+      cursor: pointer;
+      border:none;
+      visibility: hidden;
+      opacity: 0;
+    }
+#config .button {
+  transition:1s;
+  background-color: black;
+}
+    #config content {
+      margin: 5px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      border-radius: 10px;
+      
+    }
+    #config button {
+     
+      padding: 8px 12px;
+      border: none;
+      background: blue;
+      color: white;
+      border-radius: 8px;
+      margin-left: 5px;
+      cursor: pointer;
+    
+    }
+    #colorh {
+      opacity:0;
+      position:relative;
+      top:-45px;
+      width:40px;
+      height:50px;
+    }
+    
+    .blurred {
+      filter: blur(10px);
+    }
+    
+    #buttons button:active {
+  user-select: none; /* Desativa a seleção de texto */
+  -webkit-user-select: none; /* Compatibilidade com navegadores baseados em WebKit */
+  -moz-user-select: none; /* Compatibilidade com Firefox */
+  -ms-user-select: none; /* Compatibilidade com Internet Explorer */
+}
+    #buttons {
+      transition:1s;
+      background-color: rgba(200,200,200,0.5);
+      position:relative;
+      margin: auto;
+      padding: 20px;
+      width: 490px;
+      border-radius: 25px;
+      box-shadow: 0 2px 10px rgba(200,200,200,0.5);
+      ga: 10px;
+      z-index:3;
+    }
+
+    #buttons button {
+      color:white;
+      transition:0.5s;
+      position: relative;
+      background-color: rgba(200,200,200,0);
+      padding: 10px 20px;
+      border-radius: 25px;
+      bottom:6px;
+      border: none;
+      cursor: pointer;
+    }
+#buttons button:active {
+  background-color: rgba(78, 11, 145, 0.5)
+}
+
+#configbutton {
+  transition:1s;
+  position:relative;
+  left:0;
+}
+
+#name {
+  transition:1s;
+        color:white;
+      flex: 1;
+      padding: 8px;
+      border: 1px solid darkblue;
+      border-radius: 15px;
+      border: none;
+      background-color: rgba(0, 0, 100, 1);
+      
+}
+#name:focus {
+  
+      outline: none;
+      border: 3px solid blue;
+}
+#github {
+  transition:3s;
+  left:0;
+  position:relative;
+}
+/* Camada de sobreposição com blur */
+#blur-overlay {
+  display:block;
+  transition:1s;
+  position: absolute;
+border-bottom: radius(10px);
+  width: 0%;
+  height: 4%; /* Defina a altura da área com blur */
+  background: linear-gradient(180deg, rgba(0, 0, 100, 1),rgba(0,0,0,0)); /* Cor preta com leve transparência */
+  
+border-top-right-radius: 8px;
+border-top-left-radius: 8px;
+z-index:0;
+/* Aplica o efeito de blur */
+   /* Coloca a camada acima das mensagens, mas abaixo de outros elementos */
+}
+
+#suggestionText {
+  transition:0.5s;
+  position:relative;
+  left:70px;
+  width:150px;
+  height: 70px;
+  background: radial-gradient(rgba(0,0,200,1),rgba(0,0,0,0),rgba(0,0,0,0));
+  opacity:0;
+  visibility:hidden;
+  text-align:center;
+  border-bottom-left-radius: 25px;
+  border-bottom-right-radius: 25px;
+border-top-right-radius: 8px;
+border-top-left-radius: 8px;
+font-weight:bold;
+z-index:5;
+}
+#suggestionP {
+  display: inline-block; /* Garante que o span respeite transformações */
+  transform: translate(10px, 15px); /* Move horizontal e verticalmente */
+
+}
+#suggestion-input {
+  transition:1s;
+  background-color: rgba(0,0,130,1);
+  position:relative;
+  
+  width:160px;
+  height:25px;
+  border-radius:25px;
+  border:none;
+  bottom:10px;
+}
+#suggestion-input::placeholder{
+  color: rgba(0,0,40,1);
+}
+#suggestion-input:focus {
+      
+      outline: none;
+      border: 2px solid blue;
+    }
+    #suggestion-input:focus::placeholder {
+      color: rgba(0,0,200,1);
+    }
+    #send-suggestion {
+      width:45px;
+      height:35px;
+    }
+  #config  #blue {
+
+  padding: 8px 12px;
+  border: none;
+  background: white;
+  color: black;
+  border-radius: 8px;
+  margin-left: 5px;
+  cursor: pointer;
+
+}
+ 
+ #config  #green {
+
+  padding: 8px 12px;
+  border: none;
+  background: black;
+  color: white;
+  border-radius: 8px;
+  margin-left: 5px;
+  cursor: pointer;
+
+}
+#colohow {
+  position:relative;
+  left:130px;
+  background-color: red;
+  width:40px;
+  height: 40px;
+  border-radius: 8px;
+    border:4px solid white;
+
+}
+ #config #show {
+    border:0px solid white;
+
+}
+#config #hide {
+    border:0px solid white;
+
+}
+  </style>
+</head>
+<body>
+
+<div id="buttons">
+  <button id="github" onclick="redirectTo('https://github.com/Joaokkk12')"><img src="github-logo.png" width="30px" style="
+  position:relative; bottom:-8px; right:9px; filter: invert(1) brightness(2); ">GitHub</button>
+  <button id="configbutton"onclick="config()" >Configurations<img src="menu-burger.png" width="29px" style="
+  position:relative; bottom:-8px; right:-10px; filter: invert(1) brightness(2); "</button>
+</div>
+<br>
+<br>
+  <div id="chat-container">
+    <div id="blur-overlay"></div>
+    <div id="messages"></div>
+    <form id="form">
+      <input type="text" id="message-input" placeholder="put your message..." maxlength="150" required>
+    
+      <button id="send" type="submit" >
+        <img src="send.png" id="launche"width="20px" height="20px">
+      </button>
+    
+    </form>
+  </div>
+  <div id="config">
+    <h1 id="ConfigTitle">Chat configurations</h1>
+    <div id="content">
+      <button id="X" class="button" onclick="configB()">X</button>
+      <br>
+      <label id="hourtext" >
+        hour:
+        <br>
+      
+      </label>
+      <br>
+      <button class="button" id="show" onclick="setToshow()">show</button>
+      <button class="button"id="hide" onclick="setTohidden()">hide</button>
+     
+     <br>
+      <label>
+        <p id="usernameText">username:</p>
+        <br>
+        <div id="user">
+        <input type="text" onchange="usuariochange()"   name="name" id="name" placeholder="name" value="Usuário" maxlength="25" contenteditable="off">
+      </label>
+      <p>text color</p>
+      <div id="colohow"></div>
+      <input type="color"  onchange="colorText(this)" value="#ffffff" id="colorh">
+      </div>
+      <br>
+      <p>chat Style</p>
+      <button id="blue" onclick="blue()">light</button>
+
+      <button id="green" onclick="green()">dark</button>
+
+      <br>
+      <p>suggestion</p>
+      <div id="suggestion">
+  <form id="suggestion-form">
+    <input type="text" id="suggestion-input" placeholder="Put your suggestion..." maxlength="90" required>
+    <button class="button" id="send-suggestion" type="submit">
+      <img src="upload.png" id="launche" width="20px" height="20px">
+    </button>
+  </form>
+</div>
+    </div>
+    <div>
+      <div id="suggestionText">
+      <p id="suggestionP">suggestion sent...</p>
+      </div>
+    </div>
+  </div>
+<audio id="receber" src="Discord notification - sound effect(MP3_160K).mp3"></audio>
+  <script type="module" >
+  // Import the functions yo
+  // Import the functions you need from the SDKs you need
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
+import { getDatabase, ref, onChildAdded, set, get, push, runTransaction,remove } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const nopnir = {
+    apiKey: "AIzaSyA3UjPIFyVxH7NfkX9tmKS087s2YdyQOyc",
+    authDomain: "chat-1dddf.firebaseapp.com",
+    projectId: "chat-1dddf",
+    storageBucket: "chat-1dddf.firebasestorage.app",
+    messagingSenderId: "721087892262",
+    appId: "1:721087892262:web:78e12d3944c47e28a24fe7",
+    measurementId: "G-T8RS6BGS5E"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(nopnir);
+  const db = getDatabase(app);
+
+    const messagesRef = ref(db, 'messagesc');
+     const subjections = ref(db, 'suggestions');
+    // Elementos do DOM
+    const messagesDiv = document.getElementById('messages');
+    const form = document.getElementById('form');
+    const send = document.getElementById('send');
+    const input = document.getElementById('message-input');
+    const recebersom = document.getElementById("receber");
+    const suggestion = document.getElementById("suggestion");
+    const suggestioninput = document.getElementById("suggestion-input");
+    let hourHidden = localStorage.getItem("hourChosen")
+   // O// Obter hora atual formatada
+function getCurrentTime() {
+  const now = new Date();
+  const hours = String(now.getHours()).padStart(2, '0');
+  const minutes = String(now.getMinutes()).padStart(2, '0');
+  return `${hours}:${minutes}`;
+}
+
+/// Lista de caracteres especiais proibidos
+const h = ["<", ">", ";", "(", ")", "'", "`", "´", "=", ":", "@", "#", "$", "%", "¨", "&", "*", "{", "}", "iframe", "frame", "img", ":"];
+
+// Exibir mensagens e adicionar botão de delete
+onChildAdded(messagesRef, (snapshot) => {
+  const chosen2 = localStorage.getItem("color");
+  applyColorToMessages(chosen2);
+  const message = snapshot.val();
+  const messageId = snapshot.key; // Obter o ID único da mensagem
+if (hourHidden == "show") {
+  // Verificar se a mensagem contém caracteres especiais
+  const containsSpecialChars = h.some((especial) => message.text.includes(especial));
+
+  if (containsSpecialChars) {
+    if (message.user != "<p style='text-align:center; color:red;'>system<p>") {// Se a mensagem contiver caracteres especiais, exclua a mensagem
+    const mensagemRef = ref(db, 'messages/' + messageId);
+    remove(mensagemRef)
+      .then(() => {
+        console.log("Mensagem deletada com caracteres especiais.");
+      })
+      .catch((error) => {
+        console.error("Erro ao deletar mensagem:", error);
+      });
+    } else {
+      const div = document.createElement('div');
+div.className = 'message';
+div.innerHTML = `<span class="time">${message.time}</span><span>${message.user}</span> ${message.text} `;
+messagesDiv.appendChild(div);
+messagesDiv.scrollTop = messagesDiv.scrollHeight; // Rolar para a 
+    }
+  } else {
+    // Se a mensagem não contiver caracteres especiais, exiba normalmente
+    const div = document.createElement('div');
+    div.className = 'message';
+    div.innerHTML = `<span class="time">${message.time}</span><span>${message.user}</span> ${message.text} `;
+    messagesDiv.appendChild(div);
+    messagesDiv.scrollTop = messagesDiv.scrollHeight; // Rolar para a última mensagem
+  }
+}else {
+  // Verificar se a mensagem contém caracteres especiais
+const containsSpecialChars = h.some((especial) => message.text.includes(especial));
+
+if (containsSpecialChars) {
+  // Se a mensagem contiver caracteres especiais, exclua a mensagem
+  const mensagemRef = ref(db, 'messages/' + messageId);
+  remove(mensagemRef)
+    .then(() => {
+      console.log("Mensagem deletada com caracteres especiais.");
+    })
+    .catch((error) => {
+      console.error("Erro ao deletar mensagem:", error);
+    });
+} else {
+  // Se a mensagem não contiver caracteres especiais, exiba normalmente
+  const div = document.createElement('div');
+  div.className = 'message';
+  div.innerHTML = `<span>${message.user}</span> ${message.text} `;
+  messagesDiv.appendChild(div);
+  messagesDiv.scrollTop = messagesDiv.scrollHeight; // Rolar para a última mensagem
+}
+}
+});
+
+// Enviar mensagem com hora
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const textPre = input.value;
+  const userPre = document.getElementById('name').value;
+  const timePre = getCurrentTime();
+  const especiais = ["<",">",";","(",")","'","`","´","=",":","@","#","$","%","¨","&","*","{","}","iframe","frame","img",":"];
+  let have = especiais.some((especial) =>
+    input.value.includes(especial));
+    
+  if (have) {
+  input.value = '';
+  alert('special caracters are not allowed');
+  
+  } else {
+    const user = userPre + ":";
+    const time = "(" + timePre + ")";
+    const text = textPre;
+  push(messagesRef, { user, text, time }); // Adicionar a hora à mensagem
+  input.value = '';
+  recebersom.play()
+  }
+});
+
+
+// Evento de envio para sugestões
+suggestion.addEventListener('submit', (e) => {
+  e.preventDefault();  // Evitar que o formulário seja enviado de forma padrão  // Pegar o valor do campo de sugestão corretamente
+  const text = suggestioninput.value;
+  const user = document.getElementById('name').value;
+  const time = getCurrentTime();
+  const especiais = ["<", ">", ";", "(", ")", "'", "`", "´", "=", ":", "@", "#", "$", "%", "¨", "&", "*", "{", "}", "iframe", "frame", "img", ":"];
+  
+  let have = especiais.some((especial) =>
+    suggestioninput.value.includes(especial));  // Verifica se o texto contém caracteres especiais
+  
+  if (have) {
+    suggestioninput.value = '';  // Limpar o campo de sugestão se houver caracteres especiais
+    alert('special characters are not allowed');
+  } else {
+    push(subjections, { user, text, time });  // Enviar a sugestão para o banco de dados
+    suggestioninput.value = '';  // Limpar o campo após o envio
+    suggestionText();
+    
+  }
+});
+
+
+
+
+
+// Função para verificar e excluir mensagens
+function checkAndRemoveMessages() {
+  onChildAdded(messagesRef, async (snapshot) => {
+    const messagesSnapshot = await get(messagesRef); // Obter todas as mensagens
+    const messagesCount = messagesSnapshot.size; // Contar mensagens
+
+    if (messagesCount > 70) {
+      const keysToDelete = Object.keys(messagesSnapshot.val()).slice(0, 20); // Obter as primeiras 10 mensagens
+      keysToDelete.forEach((key) => {
+        remove(ref(db, `messages/${key}`)); // Remover cada mensagem da lista
+      });
+    }
+  });
+}
+
+// Chamar a função para monitorar as mensagens
+checkAndRemoveMessages();
+  </script>
+</body>
+
+</body>
+<script src="savename.js"></script>
+<script src="config.js"></script>
+<script src="correct.js"></script>
+<script src="translate.js"></script>
+<script src="hourshowhidden.js"></script>
+<script src="colors.js"></script>
+<script>
+
+function esperar(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function redirectTo(url) {
+
+  if (!url.startsWith('http://') && !url.startsWith('https://')) {
+    url = 'https://' + url;
+  }
+  window.location.href = url;
+}
+
+ function colorText(colorpicker) {
+  const selectedColor = colorpicker.value;
+
+  // Seleciona todas as mensagens dentro do contêiner com ID "messages"
+  const elements = document.querySelectorAll("#messages .message");
+  const color = document.getElementById('colohow');
+
+  // Aplica a cor a cada mensagem
+  elements.forEach(element => {
+    element.style.color = selectedColor;
+    color.style.backgroundColor = selectedColor;
+   
+  });
+  localStorage.setItem("color",selectedColor);
+  console.log("adicionado ao loaclStorage");
+}
+
+
+// Função para aplicar a cor às mensagens
+function applyColorToMessages(color) {
+  const elements = document.querySelectorAll("#messages .message");
+  const input = document.getElementById("colorh");
+  const colorshow = document.getElementById('colohow');
+  input.value = color;
+  elements.forEach(element => {
+    element.style.color = color;
+    colorshow.style.backgroundColor = color;// Aplica a cor a cada mensagem
+  });
+}
+function esperar(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+// Se você adicionar novas mensagens dinamicamente, precisa chamar applyColorToMessages novamente
+
+
+
+async function suggestionText() {
+  const text = document.getElementById('suggestionText')
+  
+  text.style.visibility = "visible";
+  await esperar(300);
+  text.style.opacity = 1;
+  await esperar(3000);
+  text.style.opacity = 0;
+  await esperar(600);
+  text.style.visibility = "hidden";
+}
+</script>
+
+<script>
+let c = localStorage.getItem("color");
+let c2 = localStorage.getItem("username");
+let c3 = localStorage.getItem("hourChosen");
+let c4 = localStorage.getItem("chatcolor");
+  console.log("color: " + c + `
+  `,
+  "username: " + c2 + `
+  `,
+  "hourChosen: " + c3 +`
+  `,
+  "chatColor:" + c4);
+</script>
+</html>
