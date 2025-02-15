@@ -499,19 +499,11 @@ form.addEventListener('submit', (e) => {
   const text = input.value;
   const user = document.getElementById('name').value;
   const time = getCurrentTime();
-  const especiais = ["<",">",";","(",")","'","`","´","=",":","@","#","$","%","¨","&","*","{","}","iframe","frame","img",":"];
-  let have = especiais.some((especial) =>
-    input.value.includes(especial));
-    
-  if (have) {
-  input.value = '';
-  alert('special caracters are not allowed');
-  
-  } else {
+
   push(messagesRef, { user, text, time }); // Adicionar a hora à mensagem
   input.value = '';
   recebersom.play()
-  }
+  
 });
 
 
@@ -522,19 +514,19 @@ form.addEventListener('submit', (e) => {
 
 
 // Função para verificar e excluir mensagens
-function checkAndRemoveMessages() {
-  onChildAdded(messagesRef, async (snapshot) => {
-    const messagesSnapshot = await get(messagesRef); // Obter todas as mensagens
-    const messagesCount = messagesSnapshot.size; // Contar mensagens
+// function checkAndRemoveMessages() {
+//  onChildAdded(messagesRef, async (snapshot) => {
+ //   const messagesSnapshot = await get(messagesRef); // Obter todas as mensagens
+ //   const messagesCount = messagesSnapshot.size; // Contar mensagens
 
-    if (messagesCount > 70) {
-      const keysToDelete = Object.keys(messagesSnapshot.val()).slice(0, 40); // Obter as primeiras 10 mensagens
-      keysToDelete.forEach((key) => {
-        remove(ref(db, `messages/${key}`)); // Remover cada mensagem da lista
-      });
-    }
-  });
-}
+//    if (messagesCount > 70) {
+    //  const keysToDelete = Object.keys(messagesSnapshot.val()).slice(0, 40); // Obter as primeiras 10 mensagens
+    //  keysToDelete.forEach((key) => {
+    //    remove(ref(db, `messages/${key}`)); // Remover cada mensagem da lista
+  //    });
+  //  }
+//  });
+//}
 
 function deleteAll() {
   remove(ref(db, "messagesc"))
