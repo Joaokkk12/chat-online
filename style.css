@@ -125,7 +125,7 @@ form input:focus {
   display: flex;
   flex-direction: column-reverse;
   gap: 10px;
-  
+  overflow:none;
 }
 .comun {
   text-align: center;   
